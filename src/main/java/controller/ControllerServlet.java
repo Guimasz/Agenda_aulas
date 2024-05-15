@@ -74,6 +74,8 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void poeDadosNaSessao(HttpSession session) {
+		
+		Db instancia = Db.getInstance();
 		/*
 		 *  Aqui, você consulta o banco de dados obtendo uma instância da classe
 		 *  (singleton) Db. Com ela, você pode obter uma lista com todos os dto's contendo
@@ -101,7 +103,6 @@ public class ControllerServlet extends HttpServlet {
 		
 		instancia.create(novaAula);
 		
-	
 		/*
 		 * 	Primeiro, você recupera (de request) os parâmetros enviados via AJAX, que são:
 		 * 	- codDisciplina,
@@ -114,7 +115,11 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void delete(HttpServletRequest request) {
-		Aula.request.getParameter("codDisciplina");
+		
+		Db instancia = Db.getInstance();
+		AulaDto aula = new AulaDto();
+		aula.codDisciplina = request.getParameter("codDisciplina");
+		instancia.delete(aula.codDisciplina);
 		/*
 		 * 	Recupere (de request) o parâmetro id e o use para remover a aula do banco de dados.
 		 */
@@ -144,6 +149,19 @@ public class ControllerServlet extends HttpServlet {
 	}
 	
 	private void update(HttpServletRequest request) {
+		
+		Db instancia = Db.getInstance();
+		
+		AulaDto aula = new AulaDto();
+		
+		aula.codDisciplina = request.getParameter("codDisciplina");
+		aula.assunto = request.getParameter("assunto");
+		aula.duracao = request.getParameter("duracao");
+		aula.data = request.getParameter("data");
+		aula.horario = request.getParameter("hora");
+		
+		instancia.update(aula);
+		
 		/*
 		 * 	Este método faz atualização do registro de uma aula.
 		 * 	Primeiro, recupere (de request) os parâmetros enviados:
