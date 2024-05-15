@@ -89,6 +89,19 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void create(HttpServletRequest request) {
+		
+		AulaDto novaAula = new AulaDto();
+		novaAula.codDisciplina = request.getParameter("codDisciplina");
+		novaAula.assunto = request.getParameter("assunto");
+		novaAula.duracao = request.getParameter("duracao");
+		novaAula.data = request.getParameter("data");
+		novaAula.horario = request.getParameter("hora");
+		
+		Db instancia =	Db.getInstance();
+		
+		instancia.create(novaAula);
+		
+	
 		/*
 		 * 	Primeiro, você recupera (de request) os parâmetros enviados via AJAX, que são:
 		 * 	- codDisciplina,
@@ -96,11 +109,12 @@ public class ControllerServlet extends HttpServlet {
 		 * 	- duracao,
 		 * 	- data,
 		 * 	- horario
-		 * 	Então, você cria um dto contendo esses dados e o invia ao banco de dados.
+		 * 	Então, você cria um dto contendo esses dados e o envia ao banco de dados.
 		 */
 	}
 
 	private void delete(HttpServletRequest request) {
+		Aula.request.getParameter("codDisciplina");
 		/*
 		 * 	Recupere (de request) o parâmetro id e o use para remover a aula do banco de dados.
 		 */
@@ -125,7 +139,7 @@ public class ControllerServlet extends HttpServlet {
 		try {
 			response.getWriter().write(json);
 		} catch (IOException e) {
-			// TODO: o que fazer de deu errado
+			// TODO: o que fazer se deu errado
 		}
 	}
 	
