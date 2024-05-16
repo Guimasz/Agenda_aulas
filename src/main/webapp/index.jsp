@@ -43,8 +43,8 @@
 		            </div>
 		            <div class="container-btns">
 		                <div></div>
-		                <div class="btn" onclick="editarAula()">EDITAR</div>
-		                <div class="btn" onclick="deleta()">REMOVER</div>
+		                <div class="btn" onclick="editarAula('<%= a.id %>')">EDITAR</div>
+		                <div class="btn" onclick="deleta('<%= a.id %>')">REMOVER</div>
 		            </div>
 		        </div>				
 				<%

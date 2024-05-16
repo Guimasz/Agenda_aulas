@@ -1,8 +1,21 @@
 // ==============================================================
 // 		EVENTOS
 
-// RESET
+// RESET (ESTÁ PRONTO)
 reset = function() {
+	let req = new XMLHttpRequest();
+	req.open("POST", "ControllerServlet", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+			atualizaSessao();
+			window.location.href = "/prova1";
+		} else {
+			// O QUE FAZER SE DEU ERRADO
+		}
+	}
+	req.send("op=RESET");
+	
 	// Aqui você cria uma requisição AJAX POST a ControllerServlet
 	// Você repassa, com a chave 'op' o parâmetro 'RESET'
 	// Se a requisição for bem sucedida, você executa:
@@ -25,7 +38,11 @@ editarAula = function(id) {
 	window.location.href = "edit?id=" + id;
 }
 
-// ENVIA CONTEÚDO DA NOVA AULA
+
+
+
+
+// ENVIA CONTEÚDO DA NOVA AULA (ESTÁ PRONTO)
 enviarNovaAula = function() {
 	// obtém os valores a partir do formulário
 	let data = document.getElementById('data-id').value;
@@ -38,15 +55,31 @@ enviarNovaAula = function() {
         document.getElementById('msg-id').style.display = 'block';
         return;
     }
+    req.open("POST", "ControllerServlet", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+    	atualizaSessao();
+    	window.location.href = "/prova1";
+		} else {
+			// O QUE FAZER SE DEU ERRADO
+		}
+
     // Aqui, você faz uma requisição AJAX POST a ControllerServlet e
     // envia a chave 'op' valendo 'CREATE'. Envie, do mesmo modo, os parâmetros
     // data, horario, duracao, codDisciplina e assunto.
     // Se a requisição for bem sucedida, execute atualizaSessao() e
     // window.location.href = "/prova1"
     // Se não for bem sucedida, decida o que fazer
+    req.send("op=CREATE");
+    req.send("data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
 }
 
-// ENVIA CONTEÚDO EM EDIÇÃO
+
+
+
+
+// ENVIA CONTEÚDO EM EDIÇÃO (ESTÁ PRONTO)
 enviarEdit = function() {
 	// obtém os valores a partir do formulário
 	let id = document.getElementById('id').innerHTML;
@@ -55,15 +88,30 @@ enviarEdit = function() {
 	let duracao = document.getElementById('dur-id').value;
 	let codDisciplina = document.getElementById('disc-id').value;
 	let assunto = document.getElementById('ass-id').value;
+	req.open("POST", "ControllerServlet", true);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+    	atualizaSessao();
+    	window.location.href = "/prova1";
+		} else {
+			// O QUE FAZER SE DEU ERRADO
+		}
+	
 	// Aqui, você faz uma requisição AJAX POST a ControllerServlet e
     // envia a chave 'op' valendo 'UPDATE'. Envie, do mesmo modo, os parâmetros
     // id, data, horario, duracao, codDisciplina e assunto.
     // Se a requisição for bem sucedida, execute atualizaSessao() e
     // window.location.href = "/prova1"
     // Se não for bem sucedida, decida o que fazer
+    req.send("op=UPDATE");
+    req.send("id="+ id +"&data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
 }
 
-// DELETA UMA AULA
+
+
+
+// DELETA UMA AULA (ESTÁ PRONTO)
 deleta = function(id) {
 	// Aqui, você faz uma requisição AJAX POST a ControllerServlet e
     // envia a chave 'op' valendo 'DELETE'. Envie, do mesmo modo, o parâmetro id
