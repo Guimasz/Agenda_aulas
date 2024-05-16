@@ -88,6 +88,8 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	private void reset() {
+		Db instancia = Db.getInstance();
+		instancia.reset();
 		/*
 		 * 	Aqui, você restaura os valores default no banco de dados (para efeito de testes)
 		 */
