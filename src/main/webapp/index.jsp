@@ -22,24 +22,24 @@
 		HttpSession sessao = request.getSession();
 		// Aqui você vai precisar recuperar dados na sessão.
 		// Abaixo, vai trocar 'false' pela condição que identifica dados na sessão.
-		if (false) {
+		if (sessao.getAttribute("lista") != null) {
 			// Aqui, você cria uma estrutura de dados com os dto's que contém os atributos
 			// de cada uma das aulas. Os atributos devem ser inseridos no código html abaixo
 			// em lugares apropriados. << remova new ArrayList() >> e o sibstitua pelo código correto.
 			// Note que parâmetros devem ser enviados em editarAula() e deleta().
 			// Se tiver dúvida, confira uma das outras páginas jsp.
-			ArrayList<AulaDto> lista = new ArrayList();
+			ArrayList<AulaDto> lista = (ArrayList<AulaDto>) sessao.getAttribute("lista");
 			for (AulaDto a: lista) {
 				%>
 				<div class="container-aula">
 		            <div class="container-linha1">
-		                <div class="info">Data: <span class="texto"></span></div>
-		                <div class="info">Hora: <span class="texto"></span></div>
-		                <div class="info">Duração(h): <span class="texto"></span></div>
+		                <div class="info">Data: <span class="texto"> <%= a.data %>   </span></div>
+		                <div class="info">Hora: <span class="texto"> <%= a.horario %></span></div>
+		                <div class="info">Duração(h): <span class="texto"> <%= a.duracao %></span></div>
 		            </div>
 		            <div class="container-linha2">
-		                <div class="info">Disciplina: <span class="texto"></span></div>
-		                <div class="info">Assunto: <span class="texto"></span></div>
+		                <div class="info">Disciplina: <span class="texto"> <%= a.disciplina %></span></div>
+		                <div class="info">Assunto: <span class="texto"> <%= a.assunto %></span></div>
 		            </div>
 		            <div class="container-btns">
 		                <div></div>
