@@ -168,3 +168,5 @@ validaNovaAula = function(data, horario, duracao, codDisciplina, assunto) {
 // 		INICIALIZA O PROCESSAMENTO
 
 atualizaSessao();
+	}
+}

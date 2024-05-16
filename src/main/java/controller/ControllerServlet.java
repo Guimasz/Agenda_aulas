@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.AulaDto;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -76,6 +77,8 @@ public class ControllerServlet extends HttpServlet {
 	private void poeDadosNaSessao(HttpSession session) {
 		
 		Db instancia = Db.getInstance();
+		ArrayList<AulaDto> lista = instancia.findAll();
+		session.setAttribute("lista", lista);
 		/*
 		 *  Aqui, você consulta o banco de dados obtendo uma instância da classe
 		 *  (singleton) Db. Com ela, você pode obter uma lista com todos os dto's contendo

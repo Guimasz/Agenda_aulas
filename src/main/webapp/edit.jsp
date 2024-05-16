@@ -15,7 +15,7 @@
 // Recupere a sessão. Crie um dto a partir da sessão. Um dos atributos do dto não está
 // na formatação adequad para funcionar nesta página. Analise o dto e identifique o que
 // pode ser feito.
-// Note que há elementos < %= % > que precisam ser preenchidos
+// Note que há elementos < % = % > que precisam ser preenchidos
 %>
 <header class="container-cabecalho">
 	
