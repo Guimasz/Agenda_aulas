@@ -173,8 +173,9 @@ public class Db {
 	public void create(AulaDto dto) {
 	    String query = "INSERT INTO AULA (COD_DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO) "
 	                    + "VALUES (?,?,?,?,?)";
-
+	  
 	    try {
+	    	
 	        PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 	        preparedStatement.setInt(1, Integer.parseInt(dto.codDisciplina));
 	        preparedStatement.setString(2, dto.assunto);

@@ -102,46 +102,39 @@ editarAula = function(id) {
 }
 
 
-
-
-
-
-
 // ENVIA CONTEÚDO DA NOVA AULA
 
-	enviarNovaAula = function() {
-    // obtém os valores a partir do formulário
-    let data = document.getElementById('data-id').value;
-    let horario = document.getElementById('hora-id').value;
-    let duracao = document.getElementById('dur-id').value;
-    let codDisciplina = document.getElementById('disc-id').value;
-    let assunto = document.getElementById('ass-id').value;
+enviarNovaAula = function() {
+	// obtém os valores a partir do formulário
+	let data = document.getElementById('data-id').value;
+	let horario = document.getElementById('hora-id').value;
+	let duracao = document.getElementById('dur-id').value;
+	let codDisciplina = document.getElementById('disc-id').value;
+	let assunto = document.getElementById('ass-id').value;
 
-    // verificando a validação
-    if (!validaNovaAula(data, horario, duracao, codDisciplina, assunto)) {
-        document.getElementById('msg-id').style.display = 'block';
-        return;
-    }
+	// verificando a validação
+	if (!validaNovaAula(data, horario, duracao, codDisciplina, assunto)) {
+		document.getElementById('msg-id').style.display = 'block';
+		return;
+	}
 
-    let req = new XMLHttpRequest();
-    req.open("POST", "ControllerServlet", true);
-    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	let req = new XMLHttpRequest();
+	req.open("POST", "ControllerServlet", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    req.onreadystatechange = () => {
-        if (req.readyState == 4 && req.status == 200) {
-            atualizaSessao();
-            window.location.href = "/prova1";
-        } else if (req.readyState == 4) {
-            // O QUE FAZER SE DEU ERRADO
-            alert("Houve um erro ao enviar a nova aula.");
-        }
-    }
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+			atualizaSessao();
+			window.location.href = "/prova1";
+		} else if (req.readyState == 4) {
+			// O QUE FAZER SE DEU ERRADO
+			alert("Houve um erro ao enviar a nova aula.");
+		}
+	}
 
-    // Constrói o corpo da requisição
-  req.send("op=CREATE&data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
+	// Constrói o corpo da requisição
+	req.send("op=CREATE&data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
 }
-
-
 
 
 
@@ -168,11 +161,6 @@ enviarEdit = function() {
 	console.log(data, horario, duracao, codDisciplina, assunto)
 
 
-
-
-
-
-
 	if (!validaNovaAula(data, horario, duracao, codDisciplina, assunto)) {
 
 		document.getElementById('msg-id').style.display = 'block';
@@ -182,48 +170,48 @@ enviarEdit = function() {
 	}
 
 
-let req = new XMLHttpRequest();
-    req.open("POST", "ControllerServlet", true);
-    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	let req = new XMLHttpRequest();
+	req.open("POST", "ControllerServlet", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    req.onreadystatechange = () => {
-        if (req.readyState == 4 && req.status == 200) {
-            atualizaSessao();
-            window.location.href = "/prova1";
-        } else if (req.readyState == 4) {
-            // O QUE FAZER SE DEU ERRADO
-            alert("Houve um erro ao editar a aula.");
-        }
-    }
-    
-     req.send("op=UPDATE&id=" + id +"&data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
-    
-   }
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+			atualizaSessao();
+			window.location.href = "/prova1";
+		} else if (req.readyState == 4) {
+			// O QUE FAZER SE DEU ERRADO
+			alert("Houve um erro ao editar a aula.");
+		}
+	}
+
+	req.send("op=UPDATE&id=" + id + "&data=" + data + "&horario=" + horario + "&duracao=" + duracao + "&codDisciplina=" + codDisciplina + "&assunto=" + assunto);
+
+}
 
 
 
 // DELETA UMA AULA
 
 deleta = function(id) {
-
-let req = new XMLHttpRequest();
+	let req = new XMLHttpRequest();
 	req.open("POST", "ControllerServlet", true);
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	req.onreadystatechange = () => {
-		if (req.readyState == 4 && req.status == 200) {
-			// O QUE FAZER SE DEU CERTO
-			atualizaSessao();
-			window.location.href = "/prova1";
-			
-		} else {
-			// O QUE FAZER SE DEU ERRADO
-			alert("Houve um erro ao deletar")
+
+		if (req.readyState == 4) {
+			if (req.status == 200) {
+				// O QUE FAZER SE DEU CERTO
+				atualizaSessao();
+				window.location.href = "/prova1";
+			} else {
+				// O QUE FAZER SE DEU ERRADO
+				alert("Houve um erro ao deletar");
+			}
 		}
 	}
+
 	req.send("op=DELETE&id=" + id);
 }
-
-
 
 
 
@@ -235,14 +223,9 @@ const voltarParaoIndex = function() {
 }
 
 
-
-
-
-
 // ============================================================
 
 // 			VALIDAÇÕES
-
 
 
 validaNovaAula = function(data, horario, duracao, codDisciplina, assunto) {
@@ -257,7 +240,6 @@ validaNovaAula = function(data, horario, duracao, codDisciplina, assunto) {
 // ===================================================================================
 
 // 		INICIALIZA O PROCESSAMENTO
-
 
 
 atualizaSessao();

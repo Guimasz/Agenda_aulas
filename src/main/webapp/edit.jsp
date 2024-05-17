@@ -19,12 +19,13 @@
 // Note que há elementos < % = % > que precisam ser preenchidos
 HttpSession sessao = request.getSession();
 AulaDto aula = (AulaDto) sessao.getAttribute("dto");
-aula.reverteFormatoData();
+
 int parsedCodDisciplina = Integer.parseInt(aula.codDisciplina);
 DisciplinaEnum disciplina = DisciplinaEnum.getDiscByCodigo(parsedCodDisciplina);
 
 
 %>
+
 <header class="container-cabecalho">
 	
   <h3>Editando: aula de <span id="nome-disciplina"><%=disciplina.getNome() %></span></h3>
