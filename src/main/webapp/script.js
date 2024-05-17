@@ -49,7 +49,8 @@ reset = function() {
 			window.location.href = "/prova1";
 
 		} else {
-
+			console.log("Erro na solicitação: ", req.status);
+		alert("Solicitação Inválida")
 			// O QUE FAZER SE DEU ERRADO
 
 		}
