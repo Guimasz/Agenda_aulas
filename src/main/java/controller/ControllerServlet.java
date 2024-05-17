@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Aula;
 import model.AulaDto;
 
 
@@ -98,7 +99,7 @@ public class ControllerServlet extends HttpServlet {
 	private void create(HttpServletRequest request) {
 		
 		AulaDto novaAula = new AulaDto();
-		novaAula.codDisciplina = request.getParameter("codDisciplina");
+		novaAula.codDisciplina = request.getParameter("codDisciplina");	
 		novaAula.assunto = request.getParameter("assunto");
 		novaAula.duracao = request.getParameter("duracao");
 		novaAula.data = request.getParameter("data");
@@ -122,9 +123,8 @@ public class ControllerServlet extends HttpServlet {
 	private void delete(HttpServletRequest request) {
 		
 		Db instancia = Db.getInstance();
-		AulaDto aula = new AulaDto();
-		aula.codDisciplina = request.getParameter("codDisciplina");
-		instancia.delete(aula.codDisciplina);
+		AulaDto aula = instancia.findById(request.getParameter("id"));
+		instancia.delete(aula.id);
 		/*
 		 * 	Recupere (de request) o parâmetro id e o use para remover a aula do banco de dados.
 		 */
@@ -157,15 +157,21 @@ public class ControllerServlet extends HttpServlet {
 		
 		Db instancia = Db.getInstance();
 		
-		AulaDto aula = new AulaDto();
 		
-		aula.codDisciplina = request.getParameter("codDisciplina");
-		aula.assunto = request.getParameter("assunto");
-		aula.duracao = request.getParameter("duracao");
-		aula.data = request.getParameter("data");
-		aula.horario = request.getParameter("hora");
 		
-		instancia.update(aula);
+		Aula newAula = new Aula();
+		
+		
+		newAula.setId(Long.parseLong(request.getParameter("id")));
+		newAula.setAssunto(request.getParameter("assunto"));
+		newAula.setData(request.getParameter("data"));
+		newAula.setDuracao(Integer.parseInt(request.getParameter("duracao")));
+		newAula.setCodDisciplina(Integer.parseInt(request.getParameter("codDisciplina")));
+		newAula.setHorario(request.getParameter("horario"));
+		
+		AulaDto aulaDto = new AulaDto(newAula);
+		
+		instancia.update(aulaDto);
 		
 		/*
 		 * 	Este método faz atualização do registro de uma aula.
