@@ -206,43 +206,26 @@ let req = new XMLHttpRequest();
 
 deleta = function(id) {
 
-
-
-	const payload = {
-
-		id,
-
-		op: "DELETE"
-
+let req = new XMLHttpRequest();
+	req.open("POST", "ControllerServlet", true);
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = () => {
+		if (req.readyState == 4 && req.status == 200) {
+			// O QUE FAZER SE DEU CERTO
+			atualizaSessao();
+			window.location.href = "/prova1";
+			
+		} else {
+			// O QUE FAZER SE DEU ERRADO
+			alert("Houve um erro ao deletar")
+		}
 	}
-
-
-
-	fetch("ControllerServlet", {
-
-		method: "POST",
-
-		headers: {
-
-			"Content-Type": "application/x-www-form-urlencoded"
-
-		},
-
-		body: new URLSearchParams(payload)
-
-	}).then(() => {
-
-		atualizaSessao();
-
-		window.location.href = "/prova1";
-
-	}).catch(() => {
-
-		alert("Houve um erro ao deletar")
-
-	})
-
+	req.send("op=DELETE&id=" + id);
 }
+
+
+
+
 
 
 const voltarParaoIndex = function() {

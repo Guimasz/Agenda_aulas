@@ -1,4 +1,5 @@
 <%@page import="model.AulaDto"%>
+<%@page import="enums.DisciplinaEnum"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,10 +17,17 @@
 // na formatação adequad para funcionar nesta página. Analise o dto e identifique o que
 // pode ser feito.
 // Note que há elementos < % = % > que precisam ser preenchidos
+HttpSession sessao = request.getSession();
+AulaDto aula = (AulaDto) sessao.getAttribute("dto");
+aula.reverteFormatoData();
+int parsedCodDisciplina = Integer.parseInt(aula.codDisciplina);
+DisciplinaEnum disciplina = DisciplinaEnum.getDiscByCodigo(parsedCodDisciplina);
+
+
 %>
 <header class="container-cabecalho">
 	
-  <h3>Editando: aula de <span id="nome-disciplina"><%=  %></span></h3>
+  <h3>Editando: aula de <span id="nome-disciplina"><%=disciplina.getNome() %></span></h3>
 </header>
 <nav class="container-nav">
   <div class="btn-nav" onclick="enviarEdit()">ENVIAR</div>
@@ -33,11 +41,11 @@
         </div>
     </div>
   <div class="container-aula-edit">
-    <div id="id" hidden="hidden"><%= %></div>
+    <div id="id" hidden="hidden"><%= aula.id %></div>
     <div class="container-linha1">
-      <div class="info">Data: <input id="data-id" type="date" class="inp-data" value="<%=  %>"></div>
-      <div class="info">Horário: <input id="hora-id" type="text" class="inp-hora" value="<%=  %>"></div>
-      <div class="info">Duração: <input id="dur-id" type="number" class="inp-dur" value="<%=  %>"></div>
+      <div class="info">Data: <input id="data-id" type="date" class="inp-data" value="<%= aula.data %>"></div>
+      <div class="info">Horário: <input id="hora-id" type="text" class="inp-hora" value="<%= aula.horario %>"></div>
+      <div class="info">Duração: <input id="dur-id" type="number" class="inp-dur" value="<%= aula.duracao %>"></div>
     </div>
     <div class="container-linha2">
       <div class="info">Disciplina:
@@ -49,7 +57,7 @@
           <option value="5">COMPILADORES</option>
         </select>
       </div>
-      <div class="info">Assunto: <input id="ass-id" type="text" class="inp-ass" value="<%= %>"></div>
+      <div class="info">Assunto: <input id="ass-id" type="text" class="inp-ass" value="<%= aula.assunto %>"></div>
     </div>
   </div>
 </div>
@@ -65,7 +73,7 @@
 			}
 		}
 	}
-	selecionar(<%=  %>);
+	selecionar(<%= disciplina.getCodigo() %>);
 </script>
 
 </body>
