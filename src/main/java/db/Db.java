@@ -36,10 +36,10 @@ public class Db {
 
 	private void confDB() {
 	    try {
-	    	this.driver = "org.h2.Driver";
-			this.url = "jdbc:h2:mem:testdb";
-			this.user = "sa";
-			this.password = "";
+	        this.driver = "org.h2.Driver";
+	        this.url = "jdbc:h2:tcp://localhost/~/test"; // URL modificada para modo servidor
+	        this.user = "sa";
+	        this.password = "";
 	        Class.forName(this.driver);
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -64,6 +64,7 @@ public class Db {
 	    String queryCreateTable = "CREATE TABLE " + tableName + " ("
 	        + "    ID BIGINT AUTO_INCREMENT PRIMARY KEY,"
 	        + "    COD_DISCIPLINA INT,"
+	        + "    DISCIPLINA VARCHAR(255),"
 	        + "    ASSUNTO VARCHAR(255),"
 	        + "    DURACAO INT,"
 	        + "    DATA VARCHAR(20),"
@@ -107,7 +108,7 @@ public class Db {
 
 	// CRUD READ
 	public ArrayList<AulaDto> findAll() {
-	    String query = "SELECT ID, COD_DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO FROM AULA;";
+	    String query = "SELECT ID, COD_DISCIPLINA, DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO FROM AULA;";
 	    ArrayList<AulaDto> lista = new ArrayList<AulaDto>();
 
 	    try {
@@ -120,6 +121,7 @@ public class Db {
 	            // Preenche os campos de AulaDto com os dados do ResultSet
 	            aulaDto.id = Long.toString(resultSet.getLong("ID"));
 	            aulaDto.codDisciplina = Integer.toString(resultSet.getInt("COD_DISCIPLINA"));
+	            aulaDto.disciplina = resultSet.getString("DISCIPLINA");
 	            aulaDto.assunto = resultSet.getString("ASSUNTO");
 	            aulaDto.duracao = Integer.toString(resultSet.getInt("DURACAO"));
 	            aulaDto.data = resultSet.getString("DATA");
@@ -141,7 +143,7 @@ public class Db {
 
 	// CRUD READ ID --FUNCIONANDO
 	public AulaDto findById(String id) {
-	    String query = "SELECT ID, COD_DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO FROM AULA WHERE ID = ?";
+	    String query = "SELECT ID, COD_DISCIPLINA, DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO FROM AULA WHERE ID = ?";
 	    AulaDto aulaDto = null;
 
 	    try {
@@ -156,6 +158,7 @@ public class Db {
 	            aulaDto = new AulaDto();
 	            aulaDto.id = Long.toString(resultSet.getLong("ID"));
 	            aulaDto.codDisciplina = Integer.toString(resultSet.getInt("COD_DISCIPLINA"));
+	            aulaDto.disciplina = resultSet.getString("DISCIPLINA");
 	            aulaDto.assunto = resultSet.getString("ASSUNTO");
 	            aulaDto.duracao = Integer.toString(resultSet.getInt("DURACAO"));
 	            aulaDto.data = resultSet.getString("DATA");
@@ -171,17 +174,18 @@ public class Db {
 
 	// CRUD CREATE -- FUNCIONANDO
 	public void create(AulaDto dto) {
-	    String query = "INSERT INTO AULA (COD_DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO) "
-	                    + "VALUES (?,?,?,?,?)";
-	  
+	    String query = "INSERT INTO AULA (COD_DISCIPLINA, DISCIPLINA, ASSUNTO, DURACAO, DATA, HORARIO) "
+	                    + "VALUES (?,?,?,?,?,?)";
+
 	    try {
-	    	
 	        PreparedStatement preparedStatement = this.connection.prepareStatement(query);
+	        
 	        preparedStatement.setInt(1, Integer.parseInt(dto.codDisciplina));
-	        preparedStatement.setString(2, dto.assunto);
-	        preparedStatement.setInt(3, Integer.parseInt(dto.duracao));
-	        preparedStatement.setString(4, dto.data);
-	        preparedStatement.setString(5, dto.horario);
+	        preparedStatement.setString(2, dto.disciplina);
+	        preparedStatement.setString(3, dto.assunto);
+	        preparedStatement.setInt(4, Integer.parseInt(dto.duracao));
+	        preparedStatement.setString(5, dto.data);
+	        preparedStatement.setString(6, dto.horario);
 
 	        // Executar a inserção
 	        preparedStatement.executeUpdate();
@@ -219,16 +223,17 @@ public class Db {
 	// CRUD UPDATE
 	public void update(AulaDto dto) {
 	    String query = "UPDATE AULA SET "
-	            + "COD_DISCIPLINA = ?, ASSUNTO = ?, DURACAO = ?, DATA = ?, HORARIO = ? "
+	            + "COD_DISCIPLINA = ?, DISCIPLINA = ?, ASSUNTO = ?, DURACAO = ?, DATA = ?, HORARIO = ? "
 	            + "WHERE ID = ?";
 	    try {
 	        PreparedStatement pst = this.connection.prepareStatement(query);
 	        pst.setInt(1, Integer.parseInt(dto.codDisciplina));
-	        pst.setString(2, dto.assunto);
-	        pst.setInt(3, Integer.parseInt(dto.duracao));
-	        pst.setString(4, dto.data);
-	        pst.setString(5, dto.horario);
-	        pst.setLong(6, Long.parseLong(dto.id));
+	        pst.setString(2, dto.disciplina);
+	        pst.setString(3, dto.assunto);
+	        pst.setInt(4, Integer.parseInt(dto.duracao));
+	        pst.setString(5, dto.data);
+	        pst.setString(6, dto.horario);
+	        pst.setLong(7, Long.parseLong(dto.id));
 	        
 	        pst.executeUpdate();
 	    } catch (SQLException e) {
@@ -250,6 +255,7 @@ public class Db {
 	public void popularTabela() {
 	    AulaDto dto1 = new AulaDto();
 	    dto1.codDisciplina = "1";
+	    dto1.disciplina = "POKEMON";
 	    dto1.assunto = "Derivadas";
 	    dto1.duracao = "2";
 	    dto1.data = "2024-04-12";
@@ -258,6 +264,7 @@ public class Db {
 
 	    AulaDto dto2 = new AulaDto();
 	    dto2.codDisciplina = "3";
+	    dto2.disciplina = "AQUAMON";
 	    dto2.assunto = "Coordenadas Cartesianas";
 	    dto2.duracao = "2";
 	    dto2.data = "2024-04-13";
@@ -266,6 +273,7 @@ public class Db {
 
 	    AulaDto dto3 = new AulaDto();
 	    dto3.codDisciplina = "4";
+	    dto3.disciplina = "CHOURISSAMON";
 	    dto3.assunto = "O Problema dos Três Corpos";
 	    dto3.duracao = "4";
 	    dto3.data = "2024-04-14";
