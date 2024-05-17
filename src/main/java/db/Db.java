@@ -180,8 +180,20 @@ public class Db {
 	    try {
 	        PreparedStatement preparedStatement = this.connection.prepareStatement(query);
 	        
-	        preparedStatement.setInt(1, Integer.parseInt(dto.codDisciplina));
-	        preparedStatement.setString(2, dto.disciplina);
+	        // Obter o enum DisciplinaEnum correspondente ao código inserido
+	        DisciplinaEnum disciplina = DisciplinaEnum.getDiscByCodigo(Integer.parseInt(dto.codDisciplina));
+
+	        // Verificar se o enum não é nulo
+	        if (disciplina != null) {
+	            // Definir o código e o nome da disciplina
+	            preparedStatement.setInt(1, disciplina.getCodigo());
+	            preparedStatement.setString(2, disciplina.getNome());
+	        } else {
+	            // Se o enum for nulo, definir o código como o valor inserido e o nome como nulo
+	            preparedStatement.setInt(1, Integer.parseInt(dto.codDisciplina));
+	            preparedStatement.setString(2, null); // ou uma string vazia, dependendo dos requisitos
+	        }
+
 	        preparedStatement.setString(3, dto.assunto);
 	        preparedStatement.setInt(4, Integer.parseInt(dto.duracao));
 	        preparedStatement.setString(5, dto.data);
@@ -191,9 +203,10 @@ public class Db {
 	        preparedStatement.executeUpdate();
 	        System.out.println("Aula cadastrada com sucesso!");
 	    } catch (SQLException e) {
-	    	e.printStackTrace();
+	        e.printStackTrace();
 	    }
 	}
+
 
 
 	// CRUD DELETE -- FUNCIONANDO
@@ -255,7 +268,6 @@ public class Db {
 	public void popularTabela() {
 	    AulaDto dto1 = new AulaDto();
 	    dto1.codDisciplina = "1";
-	    dto1.disciplina = "POKEMON";
 	    dto1.assunto = "Derivadas";
 	    dto1.duracao = "2";
 	    dto1.data = "2024-04-12";
@@ -263,8 +275,7 @@ public class Db {
 	    this.create(dto1);
 
 	    AulaDto dto2 = new AulaDto();
-	    dto2.codDisciplina = "3";
-	    dto2.disciplina = "AQUAMON";
+	    dto2.codDisciplina = "1";
 	    dto2.assunto = "Coordenadas Cartesianas";
 	    dto2.duracao = "2";
 	    dto2.data = "2024-04-13";
@@ -272,8 +283,7 @@ public class Db {
 	    this.create(dto2);
 
 	    AulaDto dto3 = new AulaDto();
-	    dto3.codDisciplina = "4";
-	    dto3.disciplina = "CHOURISSAMON";
+	    dto3.codDisciplina = "1";
 	    dto3.assunto = "O Problema dos Três Corpos";
 	    dto3.duracao = "4";
 	    dto3.data = "2024-04-14";
@@ -283,3 +293,4 @@ public class Db {
 
 
 }
+
