@@ -102,7 +102,7 @@ public class ControllerServlet extends HttpServlet {
 		novaAula.assunto = request.getParameter("assunto");
 		novaAula.duracao = request.getParameter("duracao");
 		novaAula.data = request.getParameter("data");
-		novaAula.horario = request.getParameter("hora");
+		novaAula.horario = request.getParameter("horario");
 		
 		Db instancia =	Db.getInstance();
 		
