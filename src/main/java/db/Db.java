@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import enums.DisciplinaEnum;
 import model.Aula;
 import model.AulaDto;
 
@@ -36,10 +37,10 @@ public class Db {
 
 	private void confDB() {
 	    try {
-	        this.driver = "org.h2.Driver";
-	        this.url = "jdbc:h2:tcp://localhost/~/test"; // URL modificada para modo servidor
-	        this.user = "sa";
-	        this.password = "";
+	    	this.driver = "org.h2.Driver";
+			this.url = "jdbc:h2:mem:testdb";
+			this.user = "sa";
+			this.password = "";
 	        Class.forName(this.driver);
 	    } catch (Exception e) {
 	        e.printStackTrace();
