@@ -13,16 +13,19 @@ atualizaSessao = function() {
 
 	req.onreadystatechange = () => {
 
-		if (req.readyState == 4 && req.status == 200) {
+		if (req.readyState == 4) {
 
-			// O QUE FAZER SE DEU CERTO
+			if (req.status == 200) {
 
-		} else {
+				// O QUE FAZER SE DEU CERTO
 
-			// O QUE FAZER SE DEU ERRADO
+			} else {
+
+				// O QUE FAZER SE DEU ERRADO
+
+			}
 
 		}
-
 	}
 
 	req.send("op=START_SESSION");
@@ -41,19 +44,21 @@ reset = function() {
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 	req.onreadystatechange = () => {
+		if (req.readyState == 4) {
 
-		if (req.readyState == 4 && req.status == 200) {
+			if (req.status == 200) {
 
-			atualizaSessao();
+				atualizaSessao();
 
-			window.location.href = "/prova1";
+				window.location.href = "/prova1";
 
-		} else {
+			} else {
 
-			// O QUE FAZER SE DEU ERRADO
+				// O QUE FAZER SE DEU ERRADO
+
+			}
 
 		}
-
 	}
 
 	req.send("op=RESET");
