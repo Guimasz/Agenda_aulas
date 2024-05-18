@@ -13,11 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/iagol/Documents/Agenda_aulas/src/main/webapp/WEB-INF/lib/h2-2.1.214.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v10.1"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
