@@ -100,6 +100,11 @@ public class ControllerServlet extends HttpServlet {
 		
 		AulaDto novaAula = new AulaDto();
 		novaAula.codDisciplina = request.getParameter("codDisciplina");	
+		
+		if(novaAula.codDisciplina == "0") {
+			System.out.println("erro");
+		}
+		
 		novaAula.assunto = request.getParameter("assunto");
 		novaAula.duracao = request.getParameter("duracao");
 		novaAula.data = request.getParameter("data");

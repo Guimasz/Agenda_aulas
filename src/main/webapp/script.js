@@ -20,6 +20,8 @@ atualizaSessao = function() {
 				// O QUE FAZER SE DEU CERTO
 
 			} else {
+				
+				alert("Houve um erro ao atualizar");
 
 				// O QUE FAZER SE DEU ERRADO
 
@@ -45,7 +47,6 @@ reset = function() {
 
 	req.onreadystatechange = () => {
 		if (req.readyState == 4) {
-
 			if (req.status == 200) {
 
 				atualizaSessao();
@@ -53,6 +54,7 @@ reset = function() {
 				window.location.href = "/prova1";
 
 			} else {
+				alert("Houve um erro ao resetar o banco de dados");
 
 				// O QUE FAZER SE DEU ERRADO
 
@@ -117,11 +119,19 @@ enviarNovaAula = function() {
 	let codDisciplina = document.getElementById('disc-id').value;
 	let assunto = document.getElementById('ass-id').value;
 
+
 	// verificando a validação
 	if (!validaNovaAula(data, horario, duracao, codDisciplina, assunto)) {
 		document.getElementById('msg-id').style.display = 'block';
 		return;
 	}
+
+
+
+	if (validaValores(data, horario, duracao, codDisciplina, assunto) == false) {
+		return;
+	}
+
 
 	let req = new XMLHttpRequest();
 	req.open("POST", "ControllerServlet", true);
@@ -174,6 +184,9 @@ enviarEdit = function() {
 
 	}
 
+	if (validaValores(data, horario, duracao, codDisciplina, assunto) == false) {
+		return;
+	}
 
 	let req = new XMLHttpRequest();
 	req.open("POST", "ControllerServlet", true);
@@ -241,7 +254,84 @@ validaNovaAula = function(data, horario, duracao, codDisciplina, assunto) {
 
 }
 
+validaValores = function(data, horario, duracao, codDisciplina, assunto) {
 
+	let verificado = true;
+
+if (!validaData(data)) {
+	var div = document.querySelector(".texto");
+		div.innerHTML = 'Data inválida, favou escolher uma data posterior';
+		document.getElementById('msg-id').style.display = 'block';
+        return false;
+    }
+
+	if (!isValidTime(horario)) {
+
+		var div = document.querySelector(".texto");
+		div.innerHTML = 'Horário inválido. Valores aceitos entre 00:00 e 23:59';
+		document.getElementById('msg-id').style.display = 'block';
+		return false;
+	}
+
+	if (duracao < 1 || duracao > 24) {
+		var div = document.querySelector(".texto");
+		div.innerHTML = 'Duração inválida. Valores aceitos entre 1 e 23 ';
+		document.getElementById('msg-id').style.display = 'block';
+		return false;
+	}
+	if (codDisciplina == 0) {
+		var div = document.querySelector(".texto");
+		div.innerHTML = 'Escolha uma disciplina';
+		document.getElementById('msg-id').style.display = 'block';
+		return false;
+	}
+
+
+
+	return true;
+
+
+}
+
+function isValidTime(horario) {
+
+	const timePattern = /^([01]?\d|2[0-3]):([0-5]\d)$/;
+	const match = horario.match(timePattern);
+
+	if (!match) {
+		var div = document.querySelector(".texto");
+		div.innerHTML = 'Formato inválido. Valores aceitos entre 00:00 e 23:59 ';
+		return false; // Formato inválido
+	}
+
+	const hours = parseInt(match[1], 10);
+	const minutes = parseInt(match[2], 10);
+
+
+	if (hours < 0 || hours > 23) {
+		return false;
+	}
+
+
+	if (minutes < 0 || minutes > 59) {
+		return false;
+	}
+
+	return true;
+}
+
+function validaData(data) {
+    const today = new Date();
+    const inputDate = new Date(data);
+
+    if (inputDate < today) {
+        var div = document.querySelector(".texto");
+        div.innerHTML = 'Data inválida. A data deve ser a partir de hoje.';
+        document.getElementById('msg-id').style.display = 'block';
+        return false;
+    }
+    return true;
+}
 // ===================================================================================
 
 // 		INICIALIZA O PROCESSAMENTO
